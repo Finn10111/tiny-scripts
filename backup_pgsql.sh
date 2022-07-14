@@ -1,6 +1,6 @@
 #!/bin/bash
 QUERY="SELECT datname FROM pg_database;"
-DATABASES=$(psql -p 5432 -U postgres -t -c "$QUERY")
+DATABASES=$(/bin/su - postgres -c "psql -p 5432 -U postgres -t -c '$QUERY'")
 BACKUP_DIR="/var/backup/pgsql/"
 
 # create directory if it doesn't exists yet
