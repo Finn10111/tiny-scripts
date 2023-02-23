@@ -2,7 +2,7 @@
 
 # Install Adafruit_DHT and paho via pip:
 # pip3 install Adafruit_DHT paho-mqtt
-# 
+#
 # Subscribing to your MQTT server for testing purpose:
 # mosquitto_sub -h hostname -u username -P password -t '#'
 #
@@ -52,6 +52,9 @@ data = {'temperature': round(temp, 1), 'humidity': round(hum, 1)}
 client = mqtt.Client()
 if username and password:
     client.username_pw_set(username, password)
-client.connect(broker_address, port)
-client.publish(topic, json.dumps(data), qos=qos)
-client.loop()
+try:
+    client.connect(broker_address, port)
+    client.publish(topic, json.dumps(data), qos=qos)
+    client.loop()
+except Exception:
+    print("Could not connect to MQTT broker :-(")
